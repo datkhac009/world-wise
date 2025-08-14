@@ -1,0 +1,31 @@
+.listWrap {
+  max-height: 60vh;      /* hoặc 48vh/400px tuỳ layout */
+  overflow-y: auto;      /* chỉ hiện khi tràn */
+  padding-right: 6px;
+  scrollbar-gutter: stable;   /* tránh xô lệch khi thanh cuộn xuất hiện */
+}
+
+/* Danh sách */
+.cityList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 14px;
+}
+
+/* Scrollbar đẹp (Chrome/Edge/Safari) */
+.listWrap::-webkit-scrollbar { width: 8px; }
+.listWrap::-webkit-scrollbar-track { background: transparent; }
+.listWrap::-webkit-scrollbar-thumb {
+  background: rgba(255,255,255,0.18);
+  border-radius: 8px;
+  border: 2px solid transparent;
+  background-clip: padding-box;
+}
+.listWrap:hover::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, var(--color-brand--1), var(--color-brand--2, #22d3ee));
+}
+
+/* Firefox */
+.listWrap { scrollbar-width: thin; scrollbar-color: rgba(255,255,255,0.22) transparent; }

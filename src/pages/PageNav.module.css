@@ -1,0 +1,49 @@
+.nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem 2rem;
+}
+
+.nav ul {
+    display: flex;
+    align-items: center;
+    gap: 4rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.nav li {
+    list-style: none;
+}
+
+.nav a:link,
+.nav a:visited {
+    text-decoration: none;
+    color: var(--color-light--2, #fff);
+    text-transform: uppercase;
+    font-size: 1.5rem;
+    font-weight: 600;
+    transition: color 0.2s;
+}
+
+.nav a:global(.active),
+.nav li .active {
+    color: var(--color-brand--2, #ffd700);
+    background-color: black;
+    border-radius: 4px;
+    padding: 0.5rem 1rem;
+}
+
+a.ctaLink:link,
+a.ctaLink:visited {
+    background-color: var(--color-brand--2, #ffd700);
+    color: var(--color-dark--0, #222);
+    padding: 0.8rem 2rem;
+    border-radius: 7px;
+    text-transform: uppercase;
+    font-weight: bold;
+}
+
+

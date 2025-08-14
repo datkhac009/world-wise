@@ -1,0 +1,54 @@
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* ===== Inline (dùng trong dòng) ===== */
+.inline {
+  display: inline-flex;
+  align-items: center;
+  gap: .6rem;
+  font-weight: 500;
+  color: #0f172a; /* slate-900 */
+}
+.inline .spinner {
+  width: 20px;
+  height: 20px;
+  border-radius: 9999px;
+  border: 3px solid rgba(15, 23, 42, 0.15); /* viền mờ */
+  border-top-color: #0ea5e9; /* cyan/sky */
+  animation: spin .8s linear infinite;
+}
+
+/* ===== Overlay full màn hình ===== */
+.overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: rgba(2, 6, 23, 0.45); /* backdrop */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(2px);
+}
+.overlay .spinner {
+  width: 48px;
+  height: 48px;
+  border-radius: 9999px;
+  border: 4px solid rgba(255,255,255,.25);
+  border-top-color: #22d3ee; /* accent */
+  animation: spin .9s linear infinite;
+}
+.text {
+  margin-top: .75rem;
+  font-weight: 600;
+  letter-spacing: .2px;
+  color: #fff;
+  text-shadow: 0 1px 2px rgba(0,0,0,.25);
+}
+
+/* Tôn trọng người dùng giảm chuyển động */
+@media (prefers-reduced-motion: reduce) {
+  .inline .spinner,
+  .overlay .spinner { animation: none; }
+}

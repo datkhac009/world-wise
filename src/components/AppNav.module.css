@@ -1,0 +1,56 @@
+.nav {
+  margin-top: 3rem;
+  margin-bottom: 2rem;
+}
+
+.nav ul {
+  list-style: none;
+  display: flex;
+  background-color: var(--color-dark--2);
+  border-radius: 7px;
+}
+
+.nav a:link,
+.nav a:visited {
+  display: block;
+  color: inherit;
+  text-decoration: none;
+  text-transform: uppercase;
+  font-size: 1.2rem;
+  font-weight: 700;
+  padding: 0.5rem 2rem;
+  border-radius: 5px;
+}
+
+/* CSS Modules feature */
+.nav a:global(.active) {
+  background-color: var(--color-dark--0);
+}
+/* Nav.module.css */
+.tabs {
+  display: inline-flex;
+  gap: 0;                       /* ❌ không dùng gap để khỏi lộ khe */
+  background: var(--color-dark--2);
+  padding: 4px;
+  border-radius: 10px;          /* bo chung cho cả nhóm */
+}
+
+.item { list-style: none; flex: 1; }
+
+.link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 140px;             /* hoặc flex:1 nếu muốn chia đều */
+  height: 40px;
+  padding: 0 16px;
+  text-decoration: none;
+  text-transform: uppercase;
+  font-weight: 700;
+  color: inherit;
+  border: 0;                    /* bỏ border để không tạo vạch */
+  border-radius: 8px;           /* bo riêng từng nút */
+  transition: background .15s ease;
+}
+.link:hover  { background: var(--color-dark--1); }
+.active      { background: var(--color-dark--0); }
