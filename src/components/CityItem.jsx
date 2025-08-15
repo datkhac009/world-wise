@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import styles from "./CityItem.module.css";
 const formatDate = (isString) => {
   if (!isString) return "";
@@ -20,26 +21,34 @@ const flagUrl = (input = {}) => {
 
   if (code) return `https://flagcdn.com/${code}.svg`; // ✅ luôn tồn tại
 };
-function CityItem({ city ,setCities}) {
+function CityItem({ city, setCities }) {
   console.log(city);
-  const { cityName, emoji, date ,id} = city;
+  const { cityName, emoji, date, id } = city;
+
   function handleDelete(id) {
-      setCities((prevs)=> prevs.filter((prev)=> prev.id !== id))
-    }
+    setCities((prevs) => prevs.filter((prev) => prev.id !== id));
+  }
   return (
     <div>
       <li className={styles.cityItem}>
-        <span className={styles.flag}>
-          <img
-            src={flagUrl(emoji)} // ưu tiên SVG
-            alt={emoji}
-            width="24"
-            height="18"
-          />
-        </span>
-        <h3 className={styles.name}>{cityName}</h3>
-        <time className={styles.date}>{formatDate(date)}</time>
-        <button className={styles.deleteBtn} onClick={() => handleDelete(id)}>×</button>
+        <Link to={`/app/cities/${id}`} className={styles.itemLink}>
+          <span className={styles.flag}>
+            <img src={flagUrl(emoji)} alt="" width="24" height="18" />
+          </span>
+          <span className={styles.name}>{cityName}</span>
+          <span className={styles.date}>({formatDate(date)})</span>
+        </Link>
+
+        <button
+          type="button"
+          className={styles.deleteBtn}
+          onClick={(e) => {
+            e.stopPropagation(); 
+            handleDelete(id);
+          }}
+        >
+          ×
+        </button>
       </li>
     </div>
   );

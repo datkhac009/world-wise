@@ -8,7 +8,7 @@
   background-color: var(--color-dark--2);
   border-radius: 7px;
   padding: 1rem 2rem;
-  /* border-left: 5px solid var(--color-brand--2); */
+  border-left: 5px solid var(--color-brand--2);
   cursor: pointer;
 
   color: inherit;
@@ -29,10 +29,12 @@
   font-size: 1.7rem;
   font-weight: 600;
   margin-right: auto;
+  margin-left: 1rem;
 }
 
 .date {
   font-size: 1.5rem;
+  float: right;
 }
 
 .deleteBtn {
@@ -52,9 +54,9 @@
   background-color: var(--color-brand--1);
   color: var(--color-dark--1);
 }
-.list_container {
-  max-height: 300px; /* Chiều cao tối đa */
-  overflow-y: auto;  /* Kích hoạt scroll dọc */
-  scrollbar-width: thin; /* Firefox: thanh cuộn mỏng */
+.itemLink {
+  
+  text-decoration: none;   /* bỏ gạch chân */
+  color: inherit;          /* giữ màu chữ hiện tại */
+  flex: 1;                 /* chiếm phần còn lại, để nút X bên phải */
 }
-

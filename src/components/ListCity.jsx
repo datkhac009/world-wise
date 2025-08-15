@@ -2,6 +2,7 @@ import CityItem from "./CityItem";
 import styles from "./CityList.module.css";
 import Message from './Message';
 import Loading from "./Loading";
+import { Outlet } from "react-router-dom";
 function ListCity({cities , isLoading ,setCities}) {
   console.log("status",isLoading)
 
@@ -20,6 +21,7 @@ function ListCity({cities , isLoading ,setCities}) {
         {cities.map((city)=> <CityItem key={city.id} city = {city} setCities= {setCities}/>)}
       </ul>
     </div>
+     
     </>
   );
 }

@@ -2,6 +2,7 @@
 
 // import { Outlet } from "react-router-dom"
 //import AppNav from "../components/AppNav"
+import { Outlet } from "react-router-dom"
 import Map from "../components/Map"
 import SideBar from "../components/SideBar"
 import styles from './AppLayout.module.css'
@@ -12,6 +13,7 @@ function AppLayout() {
         <div className={styles.app}>
            <SideBar />
            <Map />
+        
         </div>
     )
 }
