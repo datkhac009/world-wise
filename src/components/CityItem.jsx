@@ -23,15 +23,15 @@ const flagUrl = (input = {}) => {
 };
 function CityItem({ city, setCities }) {
   console.log(city);
-  const { cityName, emoji, date, id } = city;
-
+  const { cityName, emoji, date, id ,position} = city;
+console.log(position)
   function handleDelete(id) {
     setCities((prevs) => prevs.filter((prev) => prev.id !== id));
   }
   return (
     <div>
       <li className={styles.cityItem}>
-        <Link to={`/app/cities/${id}`} className={styles.itemLink}>
+        <Link to={`/app/cities/${id}?lat=${position.lat}&lng=${position.lng}`} className={styles.itemLink}>
           <span className={styles.flag}>
             <img src={flagUrl(emoji)} alt="" width="24" height="18" />
           </span>
