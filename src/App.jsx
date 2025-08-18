@@ -6,6 +6,7 @@ import Pricing from "./pages/Pricing";
 import AppLayout from "./pages/AppLayout";
 import Login from "./pages/Login";
 import ListCity from "./components/ListCity";
+import Forms from "./components/Form";
 import { useEffect, useState } from "react";
 import Message from "./components/Message";
 import Loading from "./components/Loading";
@@ -79,7 +80,7 @@ function App() {
                 )
               }
             />
-            <Route path="form" element={<p>List of form</p>} />
+            <Route path="form" element={<Forms />} />
           </Route>
           <Route path="/product" element={<Product />} />
           <Route path="/pricing" element={<Pricing />} />
