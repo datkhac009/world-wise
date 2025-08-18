@@ -23,17 +23,8 @@ function City() {
 
   const { id } = useParams();
   return (
-<<<<<<< HEAD
     <li className={styles.city}>
       <h1>City {id}</h1></li>
-=======
-    <li>
-      <h1>City {id}</h1>
-      <p>Posotion</p>
-      <p>lat:{lat}</p>
-      <p>png:{lng}</p>
-    </li>
->>>>>>> b22d5c50caf29383909fb69f5186196513b0e991
     // <div className={styles.city}>
     //   <div className={styles.row}>
     //     <h6>City name</h6>
