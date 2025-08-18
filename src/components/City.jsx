@@ -1,5 +1,5 @@
 import { Link, useParams } from "react-router-dom";
-//import styles from "./City.module.css";
+import styles from "./City.module.css";
 
 // const formatDate = (date) =>
 //   new Intl.DateTimeFormat("en", {
@@ -20,7 +20,7 @@ function City() {
 
   const { id } = useParams();
   return (
-    <li>
+    <li className={styles.city}>
       <h1>City {id}</h1></li>
     // <div className={styles.city}>
     //   <div className={styles.row}>
