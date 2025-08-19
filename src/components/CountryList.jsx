@@ -2,23 +2,19 @@ import styles from "./CountryList.module.css";
 import Spinner from "./Spinner";
 import Message from "./Message";
 import CountryItem from "./CountryItem";
+import { useCities } from "../contexts/Cities-ctx";
+import Loading from "./Loading";
 
-function CountryList({ countrys, isLoading }) {
+function CountryList() {
+  const { cities, isLoading } = useCities()
+  const countrys = cities
   console.log(countrys);
-  if (isLoading) return <Spinner />;
-
+  
   if (!countrys.length)
     return (
-      <Message message="Add your first city by clicking on a city on the map" />
-    );
-  //Còn cách khác là : lấy danh sách các quốc gia (country) duy nhất từ mảng cities, đồng thời lưu kèm emoji của quốc gia đó.
-  //     const country = cities.reduce((arr, city) => {
-  //   const existed = arr.map(el => el.country);
-  //   if (!existed.includes(city.country)) {
-  //     return [...arr, { country: city.country, emoji: city.emoji }];
-  //   }
-  //   return arr;
-  // }, []);
+  <Message message="Add your first city by clicking on a city on the map" />
+);
+    if (isLoading) return <Loading fullScreen label="Đang tải các nước..."/>;
   return (
     <ul className={styles.countryList}>
       {countrys.map((countrys) => (

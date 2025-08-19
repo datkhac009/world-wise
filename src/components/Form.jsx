@@ -55,7 +55,7 @@ function Form() {
         <Button
           type="back"
           onClick={() =>
-            window.history.state?.idx > 0 ? navigate(-1) : navigate("/")
+            navigate("/app/cities")
           }
         >
           &larr; Back

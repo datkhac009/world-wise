@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import styles from "./CityItem.module.css";
+import { useCities } from "../contexts/Cities-ctx";
 const formatDate = (isString) => {
   if (!isString) return "";
   return new Intl.DateTimeFormat("vi-VN", {
@@ -9,31 +10,30 @@ const formatDate = (isString) => {
     day: "numeric",
   }).format(new Date(isString));
 };
-const flagUrl = (input = {}) => {
-  const s = String(input || "");
-  // emoji của API đang là chữ hoa về viết thường
-  // đổi về country code 2 ký tự, viết thường
-  const code = /^[A-Za-z]{2,3}$/.test(s) //{2,3} là phạm vi 2 hoăc 3 ký tự VD:"VN","USA"
-    ? s.toLowerCase()
-    : String.fromCharCode(
-        ...[...s].slice(0, 2).map((ch) => (ch.codePointAt(0) ?? 0) - 127397)
-      ).toLowerCase();
 
-  if (code) return `https://flagcdn.com/${code}.svg`; // ✅ luôn tồn tại
-};
 function CityItem({ city, setCities }) {
+  const { flagUrl, currentCity } = useCities();
+
   console.log(city);
-  const { cityName, emoji, date, id ,position} = city;
-console.log(position)
+  const { cityName, emoji, date, id, position } = city;
+  console.log(String(id) === String(currentCity?.id));
   function handleDelete(id) {
     setCities((prevs) => prevs.filter((prev) => prev.id !== id));
   }
+
   return (
     <div>
-      <li className={styles.cityItem}>
-        <Link to={`/app/cities/${id}?lat=${position.lat}&lng=${position.lng}`} className={styles.itemLink}>
+      <li
+        className={`${styles.cityItem} ${
+          id === currentCity?.id ? styles["cityItem--active"] : ""
+        }`}
+      >
+        <Link
+          to={`/app/cities/${id}?lat=${position.lat}&lng=${position.lng}`}
+          className={styles.itemLink}
+        >
           <span className={styles.flag}>
-            <img src={flagUrl(emoji)} alt="" width="24" height="18" />
+            <img src={flagUrl(emoji)} alt={emoji} width="24" height="18" />
           </span>
           <span className={styles.name}>{cityName}</span>
           <span className={styles.date}>({formatDate(date)})</span>
@@ -43,7 +43,7 @@ console.log(position)
           type="button"
           className={styles.deleteBtn}
           onClick={(e) => {
-            e.stopPropagation(); 
+            e.stopPropagation();
             handleDelete(id);
           }}
         >
