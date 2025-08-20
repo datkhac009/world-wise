@@ -1,18 +1,10 @@
 import { Link } from "react-router-dom";
 import styles from "./CityItem.module.css";
 import { useCities } from "../contexts/Cities-ctx";
-const formatDate = (isString) => {
-  if (!isString) return "";
-  return new Intl.DateTimeFormat("vi-VN", {
-    weekday: "short",
-    year: "numeric",
-    month: "long",
-    day: "numeric",
-  }).format(new Date(isString));
-};
+
 
 function CityItem({ city, setCities }) {
-  const { flagUrl, currentCity } = useCities();
+  const { flagUrl, currentCity ,formatDate} = useCities();
 
   console.log(city);
   const { cityName, emoji, date, id, position } = city;

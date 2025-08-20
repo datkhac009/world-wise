@@ -5,6 +5,7 @@ import { useState } from "react";
 import styles from "./Form.module.css";
 import Button from "./Button";
 import { useNavigate } from "react-router-dom";
+import { useCities } from "../contexts/Cities-ctx";
 
 // export function convertToEmoji(countryCode) {
 //   const codePoints = countryCode
@@ -15,6 +16,7 @@ import { useNavigate } from "react-router-dom";
 // }
 
 function Form() {
+  const {formatDate} = useCities()
   const [cityName, setCityName] = useState("");
   //const [country, setCountry] = useState("");
   const [date, setDate] = useState(new Date());
@@ -37,7 +39,7 @@ function Form() {
         <input
           id="date"
           onChange={(e) => setDate(e.target.value)}
-          value={date}
+          value={formatDate(date)}
         />
       </div>
 

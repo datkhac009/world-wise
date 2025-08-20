@@ -69,8 +69,16 @@ export function CitiesProvider({ children }) {
 
     if (code) return `https://flagcdn.com/${code}.svg`; // ✅ luôn tồn tại
   };
-
-  const value = { flagUrl, cities, isLoading, setCities, getCity, currentCity };
+const formatDate = (isString) => {
+  if (!isString) return "";
+  return new Intl.DateTimeFormat("vi-VN", {
+    weekday: "short",
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  }).format(new Date(isString));
+};
+  const value = {formatDate, flagUrl, cities, isLoading, setCities, getCity, currentCity };
 
   return (
     <CitiesContext.Provider value={value}>{children}</CitiesContext.Provider>
