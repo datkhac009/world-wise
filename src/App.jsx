@@ -25,7 +25,7 @@ export default function App() {
         <Routes>
           <Route index element={<Homepage />} />
           <Route path="/app" element={<AppLayout />}>
-            <Route index element={<Navigate replace to="cities" />} />
+            <Route index element={<Navigate replace to="form" />} />
             <Route path="cities" element={<ListCity />} />
             <Route path="cities/:id" element={<City />} />
             <Route path="countries" element={<CountryList />} />

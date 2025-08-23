@@ -101,7 +101,7 @@ function DetectClick() {
 
   useMapEvents({
     //khi click thì sẽ hiện lat và lng trên url lúc click ở map
-    click: (e) => navigate(`form?lat=${e.latlng.lat}&=${e.latlng.lng}`),
+    click: (e) => navigate(`form?lat=${e.latlng.lat}&lng=${e.latlng.lng}`),
   });
 }
 export default Map;
