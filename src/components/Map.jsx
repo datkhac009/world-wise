@@ -22,7 +22,7 @@ function Map() {
     position: geolocationPosition,
     getPosition,
   } = useGeolocation();
-  const [mapPosition, setMapPosition] = useState([21, 614]);
+  const [mapPosition, setMapPosition] = useState([21.0278, 105.8342]);
   const [searchParams] = useSearchParams();
   const Maplat = searchParams.get("lat");
   const Maplng = searchParams.get("lng");
@@ -52,6 +52,7 @@ function Map() {
         />
         {cities.map((city) => {
           return (
+            
             <Marker
               key={city.id}
               position={[Number(city.position.lat), Number(city.position.lng)]}
@@ -82,6 +83,7 @@ function Map() {
                 }}
               />
             </Marker>
+            
           );
         })}
 
