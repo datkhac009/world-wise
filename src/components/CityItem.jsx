@@ -3,15 +3,14 @@ import styles from "./CityItem.module.css";
 import { useCities } from "../contexts/Cities-ctx";
 
 
-function CityItem({ city, setCities }) {
-  const { flagUrl, currentCity ,formatDate} = useCities();
-
+function CityItem({ city }) {
+  const { flagUrl, currentCity ,formatDate, DeleteCity} = useCities();
   console.log(city);
   const { cityName, emoji, date, id, position } = city;
   console.log(String(id) === String(currentCity?.id));
-  function handleDelete(id) {
-    setCities((prevs) => prevs.filter((prev) => prev.id !== id));
-  }
+  // function handleDelete(id) {
+  //   setCities((prevs) => prevs.filter((prev) => prev.id !== id));
+  // }
 
   return (
     <div>
@@ -35,8 +34,9 @@ function CityItem({ city, setCities }) {
           type="button"
           className={styles.deleteBtn}
           onClick={(e) => {
+            e.preventDefault()
             e.stopPropagation();
-            handleDelete(id);
+            DeleteCity(id);
           }}
         >
           ×

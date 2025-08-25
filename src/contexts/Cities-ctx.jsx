@@ -5,31 +5,70 @@ import {
   useCallback,
   useContext,
   useEffect,
-  useState,
+  useReducer,
+
 } from "react";
 
 const CitiesContext = createContext();
 
 const BASE_URL = "http://localhost:2003/cities";
+const initialState = {
+  cities: [],
+  isLoading: false,
+  currentCity: null,
+  error: null,
+};
+function reducer(state, action) {
+  switch (action.type) {
+    case "loading": {
+      return { ...state, isLoading: true };
+    }
 
+    case "cities/loaded": {
+      return { ...state, cities: action.payload, isLoading: false };
+    }
+    case "rejected": {
+      return { ...state, error: action.payload, isLoading: false };
+    }
+    case "city/loaded": {
+      return { ...state, isLoading: false, currentCity: action.payload };
+    }
+    case "city/create":{
+      return {...state,
+        isLoading:false,
+        cities:[...state.cities,action.payload] ,//cities sẽ thêm những city mới được add vào
+        currentCity:action.payload,
+
+      }
+    }
+    case "city/delete":{
+      return{...state,
+        cities:state.cities.filter((c)=>c?.id !== action.payload),//delete
+        currentCity:{},//về trạng thái ban đầu
+        isLoading:false
+      }
+    }
+    default:
+      break;
+  }
+}
 export function CitiesProvider({ children }) {
-  const [cities, setCities] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const [currentCity, setCurrentCity] = useState(null);
+  const [{ cities, isLoading, currentCity }, dispatch] = useReducer(
+    reducer,
+    initialState
+  );
   useEffect(() => {
     let controller = new AbortController();
     async function getCities() {
       try {
-        setIsLoading(true);
+        dispatch({ type: "loading", payload: "true" });
         const res = await fetch(BASE_URL, { signal: controller.signal });
         if (!res.ok) throw new Error(`HTTP ${res.status}`);
         const data = await res.json();
-        setCities(data);
+        dispatch({ type: "cities/loaded", payload: data });
       } catch (err) {
         if (err.name !== "AbortError")
-          console.error("Fetch cities failed:", err);
-      } finally {
-        setIsLoading(false);
+          dispatch({ type: "rejected", payload: "Fetch cities failed" });
       }
     }
 
@@ -41,20 +80,54 @@ export function CitiesProvider({ children }) {
 
   const getCity = useCallback(async (id) => {
     if (!id) return;
-    if (currentCity?.id === id) return;
+    if (Number(currentCity?.id) === id) return;
     const controller = new AbortController();
     try {
-      setIsLoading(true);
+      dispatch({ type: "loading" });
       const res = await fetch(`${BASE_URL}/${id}`, {
         signal: controller.signal,
       });
       const data = await res.json();
-      setCurrentCity(data);
+      dispatch({ type: "city/loaded", payload: data });
     } catch (e) {
-      if (e.name !== "AbortError") console.error(e);
-    } finally {
-      setIsLoading(false);
+      if (e.name !== "AbortError") dispatch({ type: "rejected", payload: e });
     }
+  }, [currentCity?.id]);
+
+  const addCity = useCallback(async (newCity) => {
+    if (!newCity) return;
+    try {
+      dispatch({type:"loading"});
+
+      const res = await fetch(`${BASE_URL}`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(newCity),
+      });
+
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+
+      const data = await res.json();
+
+      dispatch({type:"city/create",payload:data}); 
+  
+    } catch (e) {
+      dispatch({type:"rejected",payload:e})
+    } 
+  }, []);
+  const DeleteCity = useCallback(async (id) => {
+    if (!id) return;
+    try {
+      dispatch({type:"loading"});
+      const res = await fetch(`${BASE_URL}/${id}`, {
+        method: "DELETE",
+      });
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      dispatch({type:"city/delete",payload:id})
+
+    } catch (error) {
+      dispatch({type:"rejected",payload:error});
+    } 
   }, []);
 
   const flagUrl = (input = {}) => {
@@ -69,16 +142,25 @@ export function CitiesProvider({ children }) {
 
     if (code) return `https://flagcdn.com/${code}.svg`; // ✅ luôn tồn tại
   };
-const formatDate = (isString) => {
-  if (!isString) return "";
-  return new Intl.DateTimeFormat("vi-VN", {
-    weekday: "short",
-    year: "numeric",
-    month: "long",
-    day: "numeric",
-  }).format(new Date(isString));
-};
-  const value = {formatDate, flagUrl, cities, isLoading, setCities, getCity, currentCity };
+  const formatDate = (isString) => {
+    if (!isString) return "";
+    return new Intl.DateTimeFormat("vi-VN", {
+      weekday: "short",
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+    }).format(new Date(isString));
+  };
+  const value = {
+    formatDate,
+    flagUrl,
+    cities,
+    isLoading,
+    getCity,
+    currentCity,
+    addCity,
+    DeleteCity,
+  };
 
   return (
     <CitiesContext.Provider value={value}>{children}</CitiesContext.Provider>

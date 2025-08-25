@@ -4,7 +4,7 @@ import Message from './Message';
 import Loading from "./Loading";
 import { useCities } from "../contexts/Cities-ctx";
 function ListCity() {
-  const {cities , isLoading ,setCities} = useCities()
+  const {cities , isLoading } = useCities()
   console.log("data:",cities)
   console.log("status",isLoading)
   if(isLoading) return <Loading fullScreen label="Đang tải thành phố..."/>
@@ -18,7 +18,7 @@ function ListCity() {
     <div className={styles.scroll}>
 
       <ul className={styles.cityList}>
-        {cities.map((city)=> <CityItem key={city.id} city = {city} setCities= {setCities}/>)}
+        {cities.map((city)=> <CityItem key={city.id} city = {city} />)}
       </ul>
     </div>
      
