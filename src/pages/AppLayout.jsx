@@ -6,6 +6,7 @@ import { Outlet } from "react-router-dom";
 import Map from "../components/Map";
 import SideBar from "../components/SideBar";
 import styles from "./AppLayout.module.css";
+import User from './../components/User';
 
 function AppLayout() {
   return (
@@ -15,6 +16,7 @@ function AppLayout() {
       </div>
       <div className={styles.right}>
         <Map />
+        <User />
       </div>
     </div>
   );
