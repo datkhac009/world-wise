@@ -35,6 +35,30 @@
         "lng": "105.48329986518101"
       },
       "id": 98443879
+    },
+    {
+      "cityName": "Da Bac",
+      "country": "Viet Nam",
+      "date": "2025-08-27T08:43:00.232Z",
+      "emoji": "VN",
+      "notes": "",
+      "position": {
+        "lat": "20.88221001633899",
+        "lng": "105.05176410967239"
+      },
+      "id": 98443880
+    },
+    {
+      "cityName": "Borikhan",
+      "country": "Lao People's Democratic Republic (the)",
+      "date": "2025-08-27T08:52:57.326Z",
+      "emoji": "LA",
+      "notes": "",
+      "position": {
+        "lat": "18.588580375456335",
+        "lng": "103.84107947069859"
+      },
+      "id": 98443881
     }
   ]
 }
