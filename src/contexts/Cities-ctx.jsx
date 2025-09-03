@@ -5,8 +5,8 @@ import {
   useCallback,
   useContext,
   useEffect,
+  useMemo,
   useReducer,
-
 } from "react";
 
 const CitiesContext = createContext();
@@ -33,20 +33,21 @@ function reducer(state, action) {
     case "city/loaded": {
       return { ...state, isLoading: false, currentCity: action.payload };
     }
-    case "city/create":{
-      return {...state,
-        isLoading:false,
-        cities:[...state.cities,action.payload] ,//cities sẽ thêm những city mới được add vào
-        currentCity:action.payload,
-
-      }
+    case "city/create": {
+      return {
+        ...state,
+        isLoading: false,
+        cities: [...state.cities, action.payload], //cities sẽ thêm những city mới được add vào
+        currentCity: action.payload,
+      };
     }
-    case "city/delete":{
-      return{...state,
-        cities:state.cities.filter((c)=>c?.id !== action.payload),//delete
-        currentCity:{},//về trạng thái ban đầu
-        isLoading:false
-      }
+    case "city/delete": {
+      return {
+        ...state,
+        cities: state.cities.filter((c) => c?.id !== action.payload), //delete
+        currentCity: {}, //về trạng thái ban đầu
+        isLoading: false,
+      };
     }
     default:
       break;
@@ -78,26 +79,29 @@ export function CitiesProvider({ children }) {
     };
   }, []);
 
-  const getCity = useCallback(async (id) => {
-    if (!id) return;
-    if (Number(currentCity?.id) === id) return;
-    const controller = new AbortController();
-    try {
-      dispatch({ type: "loading" });
-      const res = await fetch(`${BASE_URL}/${id}`, {
-        signal: controller.signal,
-      });
-      const data = await res.json();
-      dispatch({ type: "city/loaded", payload: data });
-    } catch (e) {
-      if (e.name !== "AbortError") dispatch({ type: "rejected", payload: e });
-    }
-  }, [currentCity?.id]);
+  const getCity = useCallback(
+    async (id) => {
+      if (!id) return;
+      if (Number(currentCity?.id) === id) return;
+      const controller = new AbortController();
+      try {
+        dispatch({ type: "loading" });
+        const res = await fetch(`${BASE_URL}/${id}`, {
+          signal: controller.signal,
+        });
+        const data = await res.json();
+        dispatch({ type: "city/loaded", payload: data });
+      } catch (e) {
+        if (e.name !== "AbortError") dispatch({ type: "rejected", payload: e });
+      }
+    },
+    [currentCity?.id]
+  );
 
   const addCity = useCallback(async (newCity) => {
     if (!newCity) return;
     try {
-      dispatch({type:"loading"});
+      dispatch({ type: "loading" });
 
       const res = await fetch(`${BASE_URL}`, {
         method: "POST",
@@ -109,25 +113,23 @@ export function CitiesProvider({ children }) {
 
       const data = await res.json();
 
-      dispatch({type:"city/create",payload:data}); 
-  
+      dispatch({ type: "city/create", payload: data });
     } catch (e) {
-      dispatch({type:"rejected",payload:e})
-    } 
+      dispatch({ type: "rejected", payload: e });
+    }
   }, []);
   const DeleteCity = useCallback(async (id) => {
     if (!id) return;
     try {
-      dispatch({type:"loading"});
+      dispatch({ type: "loading" });
       const res = await fetch(`${BASE_URL}/${id}`, {
         method: "DELETE",
       });
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
-      dispatch({type:"city/delete",payload:id})
-
+      dispatch({ type: "city/delete", payload: id });
     } catch (error) {
-      dispatch({type:"rejected",payload:error});
-    } 
+      dispatch({ type: "rejected", payload: error });
+    }
   }, []);
 
   const flagUrl = (input = {}) => {
@@ -151,16 +153,18 @@ export function CitiesProvider({ children }) {
       day: "numeric",
     }).format(new Date(isString));
   };
-  const value = {
-    formatDate,
-    flagUrl,
-    cities,
-    isLoading,
-    getCity,
-    currentCity,
-    addCity,
-    DeleteCity,
-  };
+  const value = useMemo(() => {
+    return {
+      formatDate,
+      flagUrl,
+      cities,
+      isLoading,
+      getCity,
+      currentCity,
+      addCity,
+      DeleteCity,
+    };
+  }, [DeleteCity, addCity, cities, currentCity, getCity, isLoading]);
 
   return (
     <CitiesContext.Provider value={value}>{children}</CitiesContext.Provider>
