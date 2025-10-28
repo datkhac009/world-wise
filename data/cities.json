@@ -49,28 +49,40 @@
       "id": 98443880
     },
     {
-      "cityName": "Borikhan",
-      "country": "Lao People's Democratic Republic (the)",
-      "date": "2025-08-27T08:52:57.326Z",
-      "emoji": "LA",
-      "notes": "",
+      "cityName": "Thanh Son",
+      "country": "Viet Nam",
+      "date": "2025-10-28T04:20:08.063Z",
+      "emoji": "VN",
+      "notes": "dá",
       "position": {
-        "lat": "18.588580375456335",
-        "lng": "103.84107947069859"
+        "lat": "21.189631459851206",
+        "lng": "105.17716341954086"
       },
-      "id": 98443881
+      "id": 98443884
     },
     {
-      "cityName": "Hoa Binh",
-      "country": "Viet Nam",
-      "date": "2025-09-03T09:38:11.646Z",
-      "emoji": "VN",
-      "notes": "ádsadas",
+      "cityName": "Muang Phonxai",
+      "country": "Lao People's Democratic Republic (the)",
+      "date": "2025-10-28T04:22:03.550Z",
+      "emoji": "LA",
+      "notes": "ds",
       "position": {
-        "lat": "20.8868106086016",
-        "lng": "105.36336487082228"
+        "lat": "19.953842213823176",
+        "lng": "102.88465433844227"
       },
-      "id": 98443882
+      "id": 98443885
+    },
+    {
+      "cityName": "Hanoi",
+      "country": "Viet Nam",
+      "date": "2025-10-28T04:22:22.105Z",
+      "emoji": "VN",
+      "notes": "dá",
+      "position": {
+        "lat": "20.987747737585046",
+        "lng": "105.82429070422741"
+      },
+      "id": 98443886
     }
   ]
 }

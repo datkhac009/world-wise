@@ -14,6 +14,7 @@ import { useCities } from "../contexts/Cities-ctx";
 import { useEffect, useState } from "react";
 import { useGeolocation } from "../hook/useGeolocation";
 import Button from "./Button";
+import L from "leaflet";
 
 function Map() {
   const { cities, flagUrl } = useCities();
@@ -26,6 +27,25 @@ function Map() {
   const [searchParams] = useSearchParams();
   const Maplat = searchParams.get("lat");
   const Maplng = searchParams.get("lng");
+
+  // Tạo custom icon với cờ quốc gia
+  const createCustomIcon = (flagUrl) => {
+    return L.divIcon({
+      html: `<div style="
+        width: 30px;
+        height: 30px;
+        background-image: url('${flagUrl}');
+        background-size: cover;
+        background-position: center;
+        border-radius: 50%;
+        border: 2px solid white;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+      "></div>`,
+      className: 'custom-div-icon',
+      iconSize: [30, 30],
+      iconAnchor: [15, 15]
+    });
+  };
 
   useEffect(() => {
     if (Maplat && Maplng) setMapPosition([Maplat, Maplng]);
@@ -56,6 +76,7 @@ function Map() {
             <Marker
               key={city.id}
               position={[Number(city.position.lat), Number(city.position.lng)]}
+              icon={createCustomIcon(flagUrl(city.emoji))}
             >
               <Popup>
                 {/* Click vào sẽ hiện ra thành phố */}
